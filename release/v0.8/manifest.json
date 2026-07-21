@@ -1,0 +1,23 @@
+{
+  "source": {
+    "parts": "source_parts",
+    "filename": "veritaxa_v0_8_text_source.tar.gz",
+    "sha256": "72df55e0adb82624fe8b527edea80d1703cb530a3549131bcf3b775e6f16e10c",
+    "part_count": 5,
+    "encoded_chars": 172056
+  },
+  "workbook": {
+    "parts": "workbook_parts",
+    "filename": "Veritaxa_Workbench_v0.8.xlsx.gz",
+    "sha256": "3613c22ea1b4e91404f979c762639925a8699ae9b3b2c2ef345ec736a1fa4cb6",
+    "part_count": 4,
+    "encoded_chars": 134592
+  },
+  "demo-db": {
+    "parts": "db_parts",
+    "filename": "Veritaxa_v0.8_Literature_Demo.db.gz",
+    "sha256": "1bd79c7f76bb172b8a27c252ed8729f87c092b7d5d35851ee80a3428fc837b76",
+    "part_count": 1,
+    "encoded_chars": 14456
+  }
+}
