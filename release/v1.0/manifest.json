@@ -1,0 +1,57 @@
+{
+  "schema": "Veritaxa-GitHub-Release-1.0",
+  "version": "1.0.0",
+  "expected_tests": 41,
+  "artifacts": {
+    "source": {
+      "parts": "source_parts",
+      "stored_filename": "veritaxa_v1_0_text_source.tar.gz",
+      "output_filename": "veritaxa_v1_0_text_source.tar.gz",
+      "compression": "none",
+      "payload_sha256": "13227cf9ebe24f97e87b6a3deaae96c9efd0b94d33646520ffb2838fe1b64c98",
+      "output_sha256": "13227cf9ebe24f97e87b6a3deaae96c9efd0b94d33646520ffb2838fe1b64c98",
+      "size": 162715,
+      "part_count": 5
+    },
+    "workbook": {
+      "parts": "workbook_parts",
+      "stored_filename": "Veritaxa_Workbench_v1.0.xlsx.gz",
+      "output_filename": "Veritaxa_Workbench_v1.0.xlsx",
+      "compression": "gzip",
+      "payload_sha256": "271eca424c9ea224cb6fb3f97e1e60c356283324a1769a4955556458c053dc51",
+      "output_sha256": "30555a404d1b01800b8e56e33d47289717309c0a4ad300e5be8b02fc177adb1a",
+      "size": 311035,
+      "part_count": 4
+    },
+    "bundle": {
+      "parts": "bundle_parts",
+      "stored_filename": "Veritaxa_v1.0_Demo_Research_Bundle.zip",
+      "output_filename": "Veritaxa_v1.0_Demo_Research_Bundle.zip",
+      "compression": "none",
+      "payload_sha256": "673ad22b0eb148e70c40a0074041c07a18b1fafe59ada0f8c364c7b24801b9d3",
+      "output_sha256": "673ad22b0eb148e70c40a0074041c07a18b1fafe59ada0f8c364c7b24801b9d3",
+      "size": 20530,
+      "part_count": 1
+    },
+    "bundle_manifest": {
+      "parts": "bundle_manifest_parts",
+      "stored_filename": "Veritaxa_v1.0_Demo_Research_Bundle.manifest.json.gz",
+      "output_filename": "Veritaxa_v1.0_Demo_Research_Bundle.manifest.json",
+      "compression": "gzip",
+      "payload_sha256": "c91facfcb4937e03bfd3508b180942e31c39aafa790686b7159c61fdf402cc66",
+      "output_sha256": "d978db842a1ec12bf7ffd266f1b5de13196c9d853aab9685cee3b009c0c248ed",
+      "size": 1924,
+      "part_count": 1
+    },
+    "demo_db": {
+      "parts": "db_parts",
+      "stored_filename": "Veritaxa_v1.0_Demo.db.gz",
+      "output_filename": "Veritaxa_v1.0_Demo.db",
+      "compression": "gzip",
+      "payload_sha256": "5b54f16349a1bac013e26707649c078c890d63d7c792dbdc4e032254bd42cd9e",
+      "output_sha256": "e3d4dac1f94b671b0a6cfe607f756b00cc5864b9e13d54f33cc20f4d341ae2e8",
+      "size": 331776,
+      "part_count": 1
+    }
+  }
+}
