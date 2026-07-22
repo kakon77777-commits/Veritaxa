@@ -1,0 +1,2 @@
+Veritaxa v1.0.0 release candidate
+Expected tests: 41
