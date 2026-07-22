@@ -1,71 +1,137 @@
-# Veritaxa Workbench v0.7
+# Veritaxa Workbench v1.0
 
-Veritaxa is a **CHSA (Composable Hybrid Search Architecture) reference runtime** with a spreadsheet governance plane, evidence ledger, source adapters, academic discovery, and a governed literature-review pipeline.
+Veritaxa v1.0 is the first stable **CHSA (Composable Hybrid Search Architecture) reference runtime** for governed academic discovery, evidence compilation, Claim Review, argument graphs, research lifecycle maintenance, and portable audit bundles.
 
-## v0.7 boundary
+## Stable research loop
 
 ```text
-Academic discovery
-  → authorized full text / excerpt
-  → stable Evidence Spans
-  → unverified candidate Claims
-  → supports / contradicts / qualifies
-  → MRASG-lite graph
+Search / authorized source input
+  → normalized Evidence IR
+  → stable Evidence Span
+  → candidate Claim
+  → governed Claim Review
+  → MRASG-1.0
+  → evidence invalidation and dependency propagation
+  → conflict reopening / human closure
+  → conclusion recompilation
   → WAITING_REVIEW
+  → deterministic Research Bundle 1.0
 ```
 
-Abstracts, citation counts, platform rankings, and model-generated sentences are not treated as proof. Machine-extracted claims remain `unverified` until governed review.
+The system preserves four boundaries:
 
-## Reproducible release
+```text
+Extraction ≠ Evidence
+Evidence ≠ Verified Claim
+Approved Claim ≠ Universal Truth
+Recompilation ≠ Automatic Republication
+```
 
-The repository stores the complete runnable text source, the v0.7 XLSX workbench, and the SQLite literature-review demo database as verified release parts. Materialize them with:
+## Reproducible v1.0 release
+
+The repository stores the complete runnable text source, the v1.0 XLSX governance workbench, a deterministic Research Bundle, its manifest, and a SQLite demo database as verified Base64 release parts.
 
 ```bash
-python release/v0.7/materialize.py --output-dir build --extract
-cd build/source
-python -m pip install -e .
+python release/v1.0/materialize.py --output-dir build --extract --clean
+cd build/source/veritaxa_workbench_v1_0
+python -m pip install -e . --no-build-isolation
 python -m pytest -q
 ```
 
-Expected result: `27 passed`.
+Expected result: `41 passed`.
 
-The materializer verifies SHA-256 before extracting or decompressing each artifact and rejects unsafe archive paths.
+One-command verification:
 
-## v0.7 capabilities
+```bash
+python release/v1.0/verify_release.py
+```
 
-- stable Evidence Span offsets, line ranges, and SHA-256 fingerprints;
-- deterministic candidate-claim extraction;
-- `supports`, `contradicts`, and `qualifies` relations;
-- MRASG-lite graph compilation;
-- CLI and MCP `literature_review` entry points;
-- spreadsheet review control sheet `23_文獻審核`;
-- fixtures, Markdown/JSON demo outputs, SQLite Evidence IR, migration notes, and tests.
+The materializer verifies contiguous part names, strict Base64, compressed payload SHA-256, decompressed artifact SHA-256, safe archive paths, and the expected source root. The verifier also runs the complete test suite and validates the demo Research Bundle.
 
-The included fixture demo produces 2 documents, 3 Evidence Spans, 7 candidate claims, 15 MRASG-lite nodes, and 14 edges. Its final state is `WAITING_REVIEW`.
+## Stable v1.0 interfaces
+
+### Python
+
+```python
+from veritaxa import VeritaxaResearchRuntime
+
+runtime = VeritaxaResearchRuntime("data/research.db")
+result = runtime.literature_review(
+    "Research question",
+    ["authorized_documents.json"],
+    output_dir="exports/literature",
+)
+
+runtime.invalidate_evidence(
+    result["run_id"],
+    "span_...",
+    "superseded",
+    actor="source_monitor",
+    rationale="A newer version replaced the cited span.",
+)
+
+runtime.recompile(result["run_id"], output_dir="exports/lifecycle")
+bundle = runtime.build_bundle(result["run_id"], output_dir="exports/bundles")
+assert runtime.validate_bundle(bundle["bundle_path"])["valid"]
+```
+
+### CLI
+
+```bash
+veritaxa --db data/research.db literature-review \
+  --query "Research question" \
+  --input authorized_documents.json \
+  --output-dir exports/literature
+
+veritaxa --db data/research.db evidence-invalidate \
+  --run-id <run_id> \
+  --source-ref <span_or_claim_id> \
+  --change-type retracted \
+  --actor source_monitor \
+  --rationale "The source was formally retracted."
+
+veritaxa --db data/research.db research-recompile \
+  --run-id <run_id> \
+  --output-dir exports/lifecycle
+
+veritaxa --db data/research.db research-bundle \
+  --run-id <run_id> \
+  --output-dir exports/bundles
+
+veritaxa --db data/research.db validate-bundle \
+  --path exports/bundles/Veritaxa_<run_id>_Research_Bundle_v1.0.zip
+```
+
+## Stable schemas
+
+- `Veritaxa-Research-Compilation-1.0`
+- `Veritaxa-Lifecycle-1.0`
+- `MRASG-1.0`
+- `Veritaxa-Research-Bundle-1.0`
+- `Veritaxa-Manifest-1.0`
+- CHSA MCP Profile `1.0`
+
+Minor v1.x releases may add optional fields, tools, tables, and resources. They must not silently change the meaning of existing v1.0 fields or permit machine-generated truth upgrades.
 
 ## Architecture
 
 ```text
-Search Method
-× Domain Search Profile
-× Task Search Policy
-× Source Adapter
-× Protocol Mode
-```
-
-```text
 AI-native search / Cognitive Localization
 └─ CHSA public architecture
-   └─ Veritaxa reference runtime
+   └─ Veritaxa v1.0 stable runtime
       ├─ Spreadsheet Governance Plane
       ├─ Source Adapters
       ├─ Evidence Ledger / Evidence IR
       ├─ Academic Discovery
-      ├─ Literature Review / MRASG-lite
+      ├─ Literature Review
+      ├─ Claim Review
+      ├─ MRASG-1.0
+      ├─ Research Lifecycle Engine
+      ├─ Deterministic Research Bundle
       ├─ Optional MCP Gateway
       └─ EveTessera Application Profile
 ```
 
 ## License
 
-MIT. Source-specific access rules, robots policies, copyrights, database terms, and publication permissions still apply to acquired material.
+MIT. Source-specific access rules, robots policies, copyrights, database terms, and publication permissions still apply.
